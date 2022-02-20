@@ -82,16 +82,28 @@ env = environ.Env()
 environ.Env.read_env()
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("DATABASE_NAME"),
-        'USER': env("DATABASE_USER"),
-        'PASSWORD': env("DATABASE_PASSWORD"),
-        'HOST': 'his-list_mysql_1',
-        'PORT': '3306',
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': "github-actions",
+            'USER': "root",
+            'PASSWORD': "root",
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env("DATABASE_NAME"),
+            'USER': env("DATABASE_USER"),
+            'PASSWORD': env("DATABASE_PASSWORD"),
+            'HOST': 'his-list_mysql_1',
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
