@@ -81,17 +81,28 @@ env = environ.Env()
 # reading .env file
 environ.Env.read_env()
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DBNAME', ''),
-        'USER': os.environ.get('DBUSER', ''),
-        'PASSWORD': os.environ.get('DBPASSWORD', ''),
-        'HOST': os.environ.get('DBHOST', ''),
-        'PORT': '3306',
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DBNAME', ''),
+            'USER': os.environ.get('DBUSER', ''),
+            'PASSWORD': os.environ.get('DBPASSWORD', ''),
+            'HOST': os.environ.get('DBHOST', ''),
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DBNAME', ''),
+            'USER': os.environ.get('DBUSER', ''),
+            'PASSWORD': os.environ.get('DBPASSWORD', ''),
+            'HOST': os.environ.get('DBHOST', ''),
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
